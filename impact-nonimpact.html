@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact vs Non-Impact Printers | Computing Notes</title>
+    <style>
+        :root {
+            --impact-color: #dc2626;
+            --non-impact-color: #059669;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 { text-align: center; color: #0f172a; margin-bottom: 30px; }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #1e293b;
+            color: white;
+            border-color: #1e293b;
+        }
+
+        .content { display: none; }
+        .content.active { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+            border-top: 5px solid;
+        }
+
+        .impact-card { border-color: var(--impact-color); background: #fef2f2; }
+        .non-impact-card { border-color: var(--non-impact-color); background: #ecfdf5; }
+
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th { background: #1e293b; color: white; }
+        tr:nth-child(even) { background: #f1f5f9; }
+
+        /* Simulator */
+        .simulator {
+            background: #334155;
+            padding: 30px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #paper {
+            width: 200px;
+            height: 100px;
+            background: white;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .hammer {
+            width: 20px;
+            height: 20px;
+            background: #94a3b8;
+            position: absolute;
+            top: -30px;
+            transition: 0.1s;
+        }
+
+        .ink-dot {
+            width: 4px;
+            height: 4px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Printer Technology Explorer</h1>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="openTab('theory')">Core Concepts</button>
+        <button class="tab-btn" onclick="openTab('compare')">Side-by-Side Comparison</button>
+        <button class="tab-btn" onclick="openTab('sim')">Interactive Demo</button>
+    </div>
+
+    <!-- Theory Section -->
+    <div id="theory" class="content active">
+        <h2>Understanding the Mechanism</h2>
+        <p>Printers are categorized by <strong>how they transfer ink to paper</strong>. This is known as the "Physical Contact" distinction.</p>
+        
+        <div class="info-grid">
+            <div class="card impact-card">
+                <h3>Impact Printers</h3>
+                <p>These printers work exactly like a typewriter. A metal pin or character head <strong>strikes</strong> an inked ribbon, which then hits the paper.</p>
+                <ul>
+                    <li><strong>Mechanical Contact:</strong> Yes</li>
+                    <li><strong>Primary Goal:</strong> Durability and Carbon Copies</li>
+                </ul>
+            </div>
+            <div class="card non-impact-card">
+                <h3>Non-Impact Printers</h3>
+                <p>These printers do not touch the paper with a physical striking part. They use <strong>Inkjet</strong> (spraying droplets) or <strong>Laser</strong> (heat/static) technology.</p>
+                <ul>
+                    <li><strong>Mechanical Contact:</strong> No</li>
+                    <li><strong>Primary Goal:</strong> Speed and High Quality</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Section -->
+    <div id="compare" class="content">
+        <h2>Comparison Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Impact Printers</th>
+                    <th>Non-Impact Printers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Noise</strong></td>
+                    <td>Very Noisy (Mechanical hitting)</td>
+                    <td>Quiet (No hitting parts)</td>
+                </tr>
+                <tr>
+                    <td><strong>Resolution</strong></td>
+                    <td>Low (Pixelated/Grainy)</td>
+                    <td>High (Professional quality)</td>
+                </tr>
+                <tr>
+                    <td><strong>Speed</strong></td>
+                    <td>Slow (CPS - Characters per sec)</td>
+                    <td>Fast (PPM - Pages per minute)</td>
+                </tr>
+                <tr>
+                    <td><strong>Multi-part Forms</strong></td>
+                    <td>Can print carbon copies</td>
+                    <td>Cannot print carbon copies</td>
+                </tr>
+                <tr>
+                    <td><strong>Examples</strong></td>
+                    <td>Dot-Matrix, Daisy-Wheel</td>
+                    <td>Laser, Inkjet, Thermal</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Simulator Section -->
+    <div id="sim" class="content">
+        <h2>Mechanical Simulator</h2>
+        <p>Click the buttons to see how the ink reaches the paper!</p>
+        <div class="simulator">
+            <div id="paper">PAPER</div>
+            <button class="btn-action" style="background: var(--impact-color); color: white;" onclick="simulateImpact()">Simulate IMPACT (Strike)</button>
+            <button class="btn-action" style="background: var(--non-impact-color); color: white;" onclick="simulateNonImpact()">Simulate NON-IMPACT (Spray)</button>
+        </div>
+        <p id="sim-desc" style="text-align: center; font-style: italic;">Choose a technology to see the effect.</p>
+    </div>
+</div>
+
+<script>
+    function openTab(tabName) {
+        let contents = document.getElementsByClassName("content");
+        let tabs = document.getElementsByClassName("tab-btn");
+        
+        for (let i = 0; i < contents.length; i++) {
+            contents[i].classList.remove("active");
+            tabs[i].classList.remove("active");
+        }
+        
+        document.getElementById(tabName).classList.add("active");
+        event.currentTarget.classList.add("active");
+    }
+
+    function simulateImpact() {
+        const paper = document.getElementById('paper');
+        const desc = document.getElementById('sim-desc');
+        paper.innerHTML = "";
+        desc.innerText = "The print head STRIKES the ribbon. Result: Loud noise, but can penetrate multiple layers.";
+        
+        for(let i=0; i<3; i++) {
+            setTimeout(() => {
+                paper.innerHTML += "A";
+                paper.style.border = "2px solid #dc2626";
+                setTimeout(() => paper.style.border = "none", 100);
+            }, i * 200);
+        }
+    }
+
+    function simulateNonImpact() {
+        const paper = document.getElementById('paper');
+        const desc = document.getElementById('sim-desc');
+        paper.innerHTML = "";
+        desc.innerText = "Ink is SPRAYED or fused via heat. Result: Silent, smooth, and high-speed.";
+        
+        let text = "QUALITY";
+        let i = 0;
+        let interval = setInterval(() => {
+            if(i < text.length) {
+                paper.innerHTML += text[i];
+                i++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 100);
+    }
+</script>
+
+</body>
+</html>
