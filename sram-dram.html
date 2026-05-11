@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRAM vs DRAM: Interactive Guide</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --sram: #059669;
+            --dram: #d97706;
+            --bg: #f8fafc;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #1e293b;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        header { text-align: center; margin-bottom: 30px; }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .tab-btn {
+            padding: 12px 24px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .tab-btn.active-sram { border-color: var(--sram); color: var(--sram); background: #f0fdf4; }
+        .tab-btn.active-dram { border-color: var(--dram); color: var(--dram); background: #fffbeb; }
+        
+        .content-box {
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 250px;
+            border: 1px solid #e2e8f0;
+        }
+        .hidden { display: none; }
+        
+        .analogy {
+            background: #f1f5f9;
+            padding: 15px;
+            border-left: 4px solid var(--primary);
+            margin-top: 20px;
+            font-style: italic;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th { background: #f8fafc; color: var(--primary); }
+        .highlight-blue { background: #eff6ff; padding: 20px; border-radius: 8px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>SRAM vs. DRAM</h1>
+        <p>A simple interactive guide to how memory works.</p>
+    </header>
+
+    <div class="tabs">
+        <button id="btnSram" class="tab-btn active-sram" onclick="show('sram')">How SRAM Works</button>
+        <button id="btnDram" class="tab-btn" onclick="show('dram')">How DRAM Works</button>
+    </div>
+
+    <div id="sram" class="content-box">
+        <h2 style="color:var(--sram)">Static RAM (SRAM)</h2>
+        <p><strong>The Core Logic:</strong> SRAM uses a "Flip-Flop" circuit (made of 6 transistors). It works like a <strong>light switch</strong>.</p>
+        <ul>
+            <li>Once you set it to "1", it stays "1" as long as power is connected.</li>
+            <li>It is extremely fast because it doesn't need to do anything to maintain its state.</li>
+        </ul>
+        <div class="analogy">
+            <strong>Analogy:</strong> A digital scoreboard. Once you set the score, it stays there until you change it. No maintenance required.
+        </div>
+    </div>
+
+    <div id="dram" class="content-box hidden">
+        <h2 style="color:var(--dram)">Dynamic RAM (DRAM)</h2>
+        <p><strong>The Core Logic:</strong> DRAM uses a Capacitor (like a tiny battery). It works like a <strong>leaky bucket</strong>.</p>
+        <ul>
+            <li>It stores a "1" as an electric charge, but that charge leaks out very quickly.</li>
+            <li>It must be "refreshed" (refilled) thousands of times per second or it forgets the data.</li>
+        </ul>
+        <div class="analogy">
+            <strong>Analogy:</strong> Spinning a top. To keep it spinning (data alive), you have to keep giving it a flick (refresh). If you stop, it falls over.
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>SRAM</th>
+                <th>DRAM</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Speed</td><td>Lightning Fast</td><td>Moderate</td></tr>
+            <tr><td>Size</td><td>Large (6 Transistors)</td><td>Tiny (1 Transistor)</td></tr>
+            <tr><td>Cost</td><td>Expensive</td><td>Cheap</td></tr>
+            <tr><td>Location</td><td>CPU Cache</td><td>Main RAM</td></tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-blue">
+        <h3>Why do we use both?</h3>
+        <p>We use <strong>SRAM</strong> for the "Brain" (CPU Cache) because the CPU needs data instantly. We use <strong>DRAM</strong> for the "Library" (System RAM) because we need huge amounts of space at a low price.</p>
+    </div>
+</div>
+
+<script>
+    function show(type) {
+        const sramDiv = document.getElementById('sram');
+        const dramDiv = document.getElementById('dram');
+        const btnSram = document.getElementById('btnSram');
+        const btnDram = document.getElementById('btnDram');
+
+        if(type === 'sram') {
+            sramDiv.classList.remove('hidden');
+            dramDiv.classList.add('hidden');
+            btnSram.classList.add('active-sram');
+            btnDram.classList.remove('active-dram');
+        } else {
+            dramDiv.classList.remove('hidden');
+            sramDiv.classList.add('hidden');
+            btnDram.classList.add('active-dram');
+            btnSram.classList.remove('active-sram');
+        }
+    }
+</script>
+
+</body>
+</html>
