@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade 9 Mathematics - Comprehensive Examination Paper</title>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #2b6cb0;
+      --accent-color: #319795;
+      --bg-color: #f7fafc;
+      --card-bg: #ffffff;
+      --text-color: #2d3748;
+      --border-color: #e2e8f0;
+      --success-bg: #f0fff4;
+      --success-border: #68d391;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--primary-color);
+      color: white;
+      padding: 25px 30px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      text-align: center;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .exam-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-bg);
+      padding: 15px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 25px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-color);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--secondary-color);
+      border: 2px solid var(--secondary-color);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .btn-accent {
+      background-color: var(--accent-color);
+    }
+
+    .btn-accent:hover {
+      background-color: #234e52;
+    }
+
+    .question-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    .question-header {
+      background-color: #edf2f7;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+    }
+
+    .question-title {
+      color: var(--primary-color);
+      font-size: 1.05rem;
+    }
+
+    .question-marks {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .question-body {
+      padding: 20px;
+      font-size: 1.05rem;
+    }
+
+    .question-body p {
+      margin-bottom: 12px;
+    }
+
+    .question-action {
+      padding: 0 20px 20px 20px;
+    }
+
+    .answer-box {
+      display: none;
+      background-color: var(--success-bg);
+      border-top: 2px solid var(--success-border);
+      padding: 20px;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .answer-box.active {
+      display: block;
+    }
+
+    .answer-box h4 {
+      color: #22543d;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .answer-content {
+      font-size: 1rem;
+      color: #1a202c;
+    }
+
+    .diagram-container {
+      margin: 15px 0;
+      text-align: center;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      display: inline-block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 100%;
+      }
+
+      .controls, .btn, .answer-box {
+        display: none !important;
+      }
+
+      header {
+        background: none;
+        color: black;
+        border: 2px solid black;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .exam-meta {
+        border-top: 1px solid black;
+      }
+
+      .question-card {
+        border: 1px solid #000;
+        box-shadow: none;
+        page-break-inside: avoid;
+        margin-bottom: 15px;
+      }
+
+      .question-header {
+        background-color: #f0f0f0;
+        border-bottom: 1px solid #000;
+      }
+
+      .question-marks {
+        background-color: black;
+        color: white;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>EXCELLENT MATHEMATICS ASSESSMENT</h1>
+      <p>Grade 9 • Comprehensive Unit Test Paper</p>
+      <div class="exam-meta">
+        <span>Time: 1 Hour 30 Minutes</span>
+        <span>Total Questions: 9</span>
+        <span>Full Marks: 45</span>
+      </div>
+    </header>
+
+    <div class="controls">
+      <button class="btn btn-outline" id="toggle-all-btn" onclick="toggleAllAnswers()">
+        <span>👁️</span> Show All Solutions
+      </button>
+      <button class="btn btn-accent" onclick="window.print()">
+        <span>🖨️</span> Print Test Paper
+      </button>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 1: Set Theory</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>If $n(U) = 45$, $n(X \cap Y) = 15$, $n(X) = 20$ and $n(Y) = 25$, then find:</p>
+        <p><b>i.</b> $n(X \cup Y)$</p>
+        <p><b>ii.</b> $n_0(Y)$</p>
+        <p><b>iii.</b> $n(\overline{X \cup Y})$</p>
+        <p><b>iv.</b> Show all the information in a Venn diagram.</p>
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(1)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-1">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p><b>Given Data:</b> $n(U) = 45$, $n(X \cap Y) = 15$, $n(X) = 20$, $n(Y) = 25$</p><br>
+          <p><b>i. To find $n(X \cup Y)$:</b></p>
+          $$n(X \cup Y) = n(X) + n(Y) - n(X \cap Y)$$
+          $$n(X \cup Y) = 20 + 25 - 15 = 30$$<br>
+
+          <p><b>ii. To find $n_0(Y)$ (elements in Set Y only):</b></p>
+          $$n_0(Y) = n(Y) - n(X \cap Y) = 25 - 15 = 10$$<br>
+
+          <p><b>iii. To find $n(\overline{X \cup Y})$ (elements outside sets X and Y):</b></p>
+          $$n(\overline{X \cup Y}) = n(U) - n(X \cup Y) = 45 - 30 = 15$$<br>
+
+          <p><b>iv. Venn Diagram Representation:</b></p>
+          <p>Calculations for set regions: $n_0(X) = 20 - 15 = 5$, $n(X \cap Y) = 15$, $n_0(Y) = 10$, $\text{Outside} = 15$.</p>
+          
+          <div class="diagram-container">
+            <svg width="320" height="200" viewBox="0 0 320 200">
+              <rect x="10" y="10" width="300" height="180" fill="#f8fafc" stroke="#2b6cb0" stroke-width="2"/>
+              <text x="25" y="35" font-weight="bold" fill="#1a365d">U (45)</text>
+              <circle cx="110" cy="110" r="60" fill="#3182ce" fill-opacity="0.2" stroke="#2b6cb0" stroke-width="2"/>
+              <circle cx="200" cy="110" r="60" fill="#e53e3e" fill-opacity="0.2" stroke="#c53030" stroke-width="2"/>
+              <text x="90" y="45" font-weight="bold" fill="#2b6cb0">Set X</text>
+              <text x="210" y="45" font-weight="bold" fill="#c53030">Set Y</text>
+              <text x="80" y="115" font-size="16" font-weight="bold">5</text>
+              <text x="148" y="115" font-size="16" font-weight="bold">15</text>
+              <text x="225" y="115" font-size="16" font-weight="bold">10</text>
+              <text x="280" y="175" font-size="14" font-weight="bold" fill="#4a5568">15</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 2: Mensuration - Hall Dimensions & Costing</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>A rectangular hall is $6\text{ m}$ long, $5\text{ m}$ broad and $4\text{ m}$ high. It contains $2$ doors of size $2\text{ m} \times 3\text{ m}$ and $3$ windows of size $2\text{ m} \times 1.75\text{ m}$.</p>
+        <p><b>i.</b> Find the area of the floor.</p>
+        <p><b>ii.</b> Find the area of 4 walls excluding doors and windows.</p>
+        <p><b>iii.</b> What is the cost of papering 4 walls at $\text{Rs. } 200\text{ per m}^2$?</p>
+        <p><b>iv.</b> Find the cost of curtains for the doors and windows at $\text{Rs. } 500\text{ per m}^2$.</p>
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(2)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-2">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p><b>Given:</b> Length ($l$) = $6\text{ m}$, Breadth ($b$) = $5\text{ m}$, Height ($h$) = $4\text{ m}$</p><br>
+          <p><b>i. Area of the floor:</b></p>
+          $$\text{Area} = l \times b = 6 \times 5 = \mathbf{30\text{ m}^2}$$<br>
+
+          <p><b>ii. Area of 4 walls excluding doors and windows:</b></p>
+          $$\text{Area of 4 walls (including openings)} = 2h(l + b) = 2 \times 4 \times (6 + 5) = 8 \times 11 = 88\text{ m}^2$$
+          $$\text{Area of 2 doors} = 2 \times (2 \times 3) = 12\text{ m}^2$$
+          $$\text{Area of 3 windows} = 3 \times (2 \times 1.75) = 10.5\text{ m}^2$$
+          $$\text{Total openings area} = 12 + 10.5 = 22.5\text{ m}^2$$
+          $$\text{Area of 4 walls excluding openings} = 88 - 22.5 = \mathbf{65.5\text{ m}^2}$$<br>
+
+          <p><b>iii. Cost of papering the 4 walls:</b></p>
+          $$\text{Cost} = 65.5\text{ m}^2 \times \text{Rs. } 200/\text{m}^2 = \mathbf{\text{Rs. } 13,100}$$<br>
+
+          <p><b>iv. Cost of curtains for doors and windows:</b></p>
+          $$\text{Cost} = 22.5\text{ m}^2 \times \text{Rs. } 500/\text{m}^2 = \mathbf{\text{Rs. } 11,250}$$
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 3: Mensuration - Triangular Prism</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>The volume of a prism having its base as a right-angled triangle is $840\text{ cm}^3$. The lengths of the sides of the right-angled triangle containing the right angle are $8\text{ cm}$ and $6\text{ cm}$.</p>
+        <p><b>i.</b> Find the area of the base.</p>
+        <p><b>ii.</b> Find the height of the prism.</p>
+        <p><b>iii.</b> Find the total surface area of the prism.</p>
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(3)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-3">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p><b>Given:</b> Volume ($V$) = $840\text{ cm}^3$, Base legs $a = 8\text{ cm}$, $b = 6\text{ cm}$.</p><br>
+          <p><b>i. Area of the base ($B$):</b></p>
+          $$B = \frac{1}{2} \times \text{base} \times \text{height} = \frac{1}{2} \times 8 \times 6 = \mathbf{24\text{ cm}^2}$$<br>
+
+          <p><b>ii. Height of the prism ($h$):</b></p>
+          $$\text{Volume} = B \times h \implies 840 = 24 \times h \implies h = \frac{840}{24} = \mathbf{35\text{ cm}}$$<br>
+
+          <p><b>iii. Total Surface Area ($\text{TSA}$) of the prism:</b></p>
+          <p>First find the hypotenuse ($c$) of the base triangle:</p>
+          $$c = \sqrt{a^2 + b^2} = \sqrt{8^2 + 6^2} = \sqrt{64 + 36} = \sqrt{100} = 10\text{ cm}$$
+          $$\text{Perimeter of base } (P) = a + b + c = 8 + 6 + 10 = 24\text{ cm}$$
+          $$\text{Lateral Surface Area } (\text{LSA}) = P \times h = 24 \times 35 = 840\text{ cm}^2$$
+          $$\text{Total Surface Area } (\text{TSA}) = \text{LSA} + 2 \times B = 840 + 2(24) = 840 + 48 = \mathbf{888\text{ cm}^2}$$
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 4: Mensuration - Cylinder Volume</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>A $30\text{ cm}$ high cylinder with a $14\text{ cm}$ diameter is cut vertically into two equal halves. What is the volume of a half part?</p>
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(4)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-4">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p><b>Given Data:</b></p>
+          <p>Height of cylinder ($h$) = $30\text{ cm}$</p>
+          <p>Diameter ($d$) = $14\text{ cm} \implies \text{Radius } (r) = \frac{14}{2} = 7\text{ cm}$</p><br>
+
+          <p><b>Step 1: Calculate full cylinder volume ($V$):</b></p>
+          $$V = \pi r^2 h = \frac{22}{7} \times 7^2 \times 30 = 22 \times 7 \times 30 = 4620\text{ cm}^3$$<br>
+
+          <p><b>Step 2: Calculate volume of half part:</b></p>
+          $$\text{Volume of half part} = \frac{V}{2} = \frac{4620}{2} = \mathbf{2310\text{ cm}^3}$$
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 5: Trigonometry - Heights & Distances</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>The height of an electric pole is $5\sqrt{3}\text{ m}$. Its top is observed from a point $15\text{ m}$ away from its foot. Find the reference angle of elevation.</p>
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(5)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-5">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p>Let $\theta$ be the reference angle of elevation.</p>
+          <p>Opposite side ($\text{Height of pole}, h$) = $5\sqrt{3}\text{ m}$</p>
+          <p>Adjacent side ($\text{Distance from foot}, d$) = $15\text{ m}$</p><br>
+
+          <p>Using the tangent ratio:</p>
+          $$\tan\theta = \frac{\text{Opposite}}{\text{Adjacent}} = \frac{5\sqrt{3}}{15}$$
+          $$\tan\theta = \frac{\sqrt{3}}{3} = \frac{1}{\sqrt{3}}$$
+          $$\text{Since } \tan 30^\circ = \frac{1}{\sqrt{3}}, \text{ we have:}$$
+          $$\theta = \mathbf{30^\circ}$$
+          <p><b>Answer:</b> The reference angle of elevation is $30^\circ$.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 6: Algebra - Factorization</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>Factorize the following algebraic expression completely:</p>
+        $$x^2 - 10x + 24 + 6y - 9y^2$$
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(6)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-6">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p>Given expression: $x^2 - 10x + 24 + 6y - 9y^2$</p><br>
+          <p><b>Step 1: Rearrange and complete the square by writing $24$ as $25 - 1$:</b></p>
+          $$= x^2 - 10x + 25 - 1 + 6y - 9y^2$$<br>
+
+          <p><b>Step 2: Group into perfect square terms:</b></p>
+          $$= (x^2 - 10x + 25) - (9y^2 - 6y + 1)$$
+          $$= (x - 5)^2 - (3y - 1)^2$$<br>
+
+          <p><b>Step 3: Apply difference of two squares identity $a^2 - b^2 = (a - b)(a + b)$:</b></p>
+          $$= [(x - 5) - (3y - 1)][(x - 5) + (3y - 1)]$$
+          $$= (x - 5 - 3y + 1)(x - 5 + 3y - 1)$$
+          $$= \mathbf{(x - 3y - 4)(x + 3y - 6)}$$
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 7: Algebra - Highest Common Factor (H.C.F.)</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>Find the H.C.F. of the following algebraic expressions:</p>
+        $$x^2 - 4y^2, \quad x^2 + xy - 2y^2, \quad \text{and} \quad (x - 2y)^2 + 8xy$$
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(7)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-7">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p><b>1st Expression:</b></p>
+          $$x^2 - 4y^2 = (x - 2y)(x + 2y)$$<br>
+
+          <p><b>2nd Expression:</b></p>
+          $$x^2 + xy - 2y^2 = x^2 + 2xy - xy - 2y^2$$
+          $$= x(x + 2y) - y(x + 2y) = (x + 2y)(x - y)$$<br>
+
+          <p><b>3rd Expression:</b></p>
+          $$(x - 2y)^2 + 8xy = x^2 - 4xy + 4y^2 + 8xy$$
+          $$= x^2 + 4xy + 4y^2 = (x + 2y)^2 = (x + 2y)(x + 2y)$$<br>
+
+          <p><b>Finding H.C.F. (Common factors in all three expressions):</b></p>
+          $$\text{Common factor} = (x + 2y)$$
+          $$\mathbf{\text{H.C.F.} = x + 2y}$$
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 8: Algebra - Lowest Common Multiple (L.C.M.)</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>Find the L.C.M. of the following expressions:</p>
+        $$24x^2 - 54, \quad 16x^2 - 48x + 36, \quad \text{and} \quad 12x^2 - 6x - 18$$
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(8)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-8">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p><b>1st Expression:</b></p>
+          $$24x^2 - 54 = 6(4x^2 - 9) = 6(2x - 3)(2x + 3)$$<br>
+
+          <p><b>2nd Expression:</b></p>
+          $$16x^2 - 48x + 36 = 4(4x^2 - 12x + 9) = 4(2x - 3)^2$$<br>
+
+          <p><b>3rd Expression:</b></p>
+          $$12x^2 - 6x - 18 = 6(2x^2 - x - 3) = 6(2x^2 - 3x + 2x - 3)$$
+          $$= 6[x(2x - 3) + 1(2x - 3)] = 6(2x - 3)(x + 1)$$<br>
+
+          <p><b>Finding L.C.M.:</b></p>
+          <p>- Numerical coefficients: $\text{L.C.M.}(6, 4, 6) = 12$</p>
+          <p>- Polynomial factors: Highest powers of $(2x - 3)^2$, $(2x + 3)$, and $(x + 1)$</p>
+          $$\mathbf{\text{L.C.M.} = 12(x + 1)(2x + 3)(2x - 3)^2}$$
+        </div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-header">
+        <span class="question-title">Question 9: Indices & Exponents - Simplification</span>
+        <span class="question-marks">5 Marks</span>
+      </div>
+      <div class="question-body">
+        <p>Simplify the following exponential expression:</p>
+        $$\left(\frac{x^b}{x^{-a}}\right)^{b-a} \times \left(\frac{x^a}{x^{-c}}\right)^{a-c} \times \left(\frac{x^c}{x^{-b}}\right)^{c-b}$$
+      </div>
+      <div class="question-action">
+        <button class="btn" onclick="toggleAnswer(9)">Reveal Solution</button>
+      </div>
+      <div class="answer-box" id="ans-9">
+        <h4>Step-by-Step Solution:</h4>
+        <div class="answer-content">
+          <p><b>Step 1: Simplify each factor using index laws $\frac{1}{x^{-n}} = x^n$:</b></p>
+          $$\text{1st Factor: } \left(\frac{x^b}{x^{-a}}\right)^{b-a} = \left(x^{b - (-a)}\right)^{b-a} = \left(x^{b+a}\right)^{b-a} = x^{(b+a)(b-a)} = x^{b^2 - a^2}$$
+          $$\text{2nd Factor: } \left(\frac{x^a}{x^{-c}}\right)^{a-c} = \left(x^{a - (-c)}\right)^{a-c} = \left(x^{a+c}\right)^{a-c} = x^{(a+c)(a-c)} = x^{a^2 - c^2}$$
+          $$\text{3rd Factor: } \left(\frac{x^c}{x^{-b}}\right)^{c-b} = \left(x^{c - (-b)}\right)^{c-b} = \left(x^{c+b}\right)^{c-b} = x^{(c+b)(c-b)} = x^{c^2 - b^2}$$<br>
+
+          <p><b>Step 2: Multiply factors by adding exponents ($x^m \times x^n = x^{m+n}$):</b></p>
+          $$= x^{(b^2 - a^2) + (a^2 - c^2) + (c^2 - b^2)}$$
+          $$= x^0 = \mathbf{1}$$
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let allShown = false;
+
+    function toggleAnswer(qNum) {
+      const ansBox = document.getElementById(`ans-${qNum}`);
+      const btn = ansBox.previousElementSibling.querySelector('.btn');
+      
+      if (ansBox.classList.contains('active')) {
+        ansBox.classList.remove('active');
+        btn.textContent = 'Reveal Solution';
+      } else {
+        ansBox.classList.add('active');
+        btn.textContent = 'Hide Solution';
+      }
+    }
+
+    function toggleAllAnswers() {
+      allShown = !allShown;
+      const toggleBtn = document.getElementById('toggle-all-btn');
+      
+      for (let i = 1; i <= 9; i++) {
+        const ansBox = document.getElementById(`ans-${i}`);
+        const btn = ansBox.previousElementSibling.querySelector('.btn');
+        
+        if (allShown) {
+          ansBox.classList.add('active');
+          btn.textContent = 'Hide Solution';
+        } else {
+          ansBox.classList.remove('active');
+          btn.textContent = 'Reveal Solution';
+        }
+      }
+
+      toggleBtn.innerHTML = allShown 
+        ? '<span>🙈</span> Hide All Solutions' 
+        : '<span>👁️</span> Show All Solutions';
+    }
+  </script>
+</body>
+</html>
